@@ -1,0 +1,6 @@
+
+ ~/workspaceworkspace/cbmc/src/cbmc/cbmc ipc.c --function sys_port_create --unwind 2
+
+~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c --function main --unwind 2
+
+~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c --function main --unwind 2
