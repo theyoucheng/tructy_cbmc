@@ -23,8 +23,9 @@
 
 #pragma once
 
-#include <lib/trusty/handle.h>
-#include <sys/types.h>
+//#include <lib/trusty/handle.h>
+//#include <sys/types.h>
+#include "/home/syc/workspace/google-aspire/trusty/trusty/trusty_kernel_lib_trusty/include/lib/trusty/handle.h"
 
 #define HSET_ADD 0
 #define HSET_DEL 1

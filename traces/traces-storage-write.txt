@@ -1,0 +1,225 @@
+
+
+State 316 file cbmc_trusty_header.h function copy_from_user line 15 thread 0
+----------------------------------------------------
+  dst=(const void *)&tmp_msg!0@1.num_iov (?)
+
+State 317 file cbmc_trusty_header.h function copy_from_user line 15 thread 0
+----------------------------------------------------
+  src=NULL (?)
+
+State 318 file cbmc_trusty_header.h function copy_from_user line 15 thread 0
+----------------------------------------------------
+  n=16ul (00000000 00000000 00000000 00000000 00000000 00000000 00000000 00010000)
+
+State 327 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[0l]=3 (00000011)
+
+State 328 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[1l]=0 (00000000)
+
+State 329 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[2l]=0 (00000000)
+
+State 330 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[3l]=0 (00000000)
+
+State 331 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[4l]=0 (00000000)
+
+State 332 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[5l]=0 (00000000)
+
+State 333 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[6l]=0 (00000000)
+
+State 334 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[7l]=0 (00000000)
+
+State 335 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[8l]=0 (00000000)
+
+State 336 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[9l]=0 (00000000)
+
+State 337 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[10l]=0 (00000000)
+
+State 338 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[11l]=0 (00000000)
+
+State 339 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[12l]=0 (00000000)
+
+State 340 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[13l]=0 (00000000)
+
+State 341 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[14l]=0 (00000000)
+
+State 342 file <builtin-library-memcpy> function memcpy line 45 thread 0
+----------------------------------------------------
+  src_n[15l]=4 (00000100)
+
+State 344 file <builtin-library-memcpy> function memcpy line 46 thread 0
+----------------------------------------------------
+  tmp_msg.num_iov=3u (00000000 00000000 00000000 00000011)
+
+State 345 file <builtin-library-memcpy> function memcpy line 46 thread 0
+----------------------------------------------------
+  tmp_msg.iov=0u (00000000 00000000 00000000 00000000)
+
+State 346 file <builtin-library-memcpy> function memcpy line 46 thread 0
+----------------------------------------------------
+  tmp_msg.num_handles=0u (00000000 00000000 00000000 00000000)
+
+State 347 file <builtin-library-memcpy> function memcpy line 46 thread 0
+----------------------------------------------------
+  tmp_msg.handles=67108864u (00000100 00000000 00000000 00000000)
+
+State 353 file ipc_msg.c function sys_send_msg line 557 thread 0
+----------------------------------------------------
+  ret=0 (00000000 00000000 00000000 00000000)
+
+State 357 file ipc_msg.c function sys_send_msg line 562 thread 0
+----------------------------------------------------
+  ctx=&cbmc_curr_uctx (?)
+
+State 358 file ipc_msg.c function sys_send_msg line 562 thread 0
+----------------------------------------------------
+  handle_id=0u (00000000 00000000 00000000 00000000)
+
+State 359 file ipc_msg.c function sys_send_msg line 562 thread 0
+----------------------------------------------------
+  handle_ptr=&chandle!0@1 (?)
+
+State 360 file uctx.c function uctx_handle_get line 492 thread 0
+----------------------------------------------------
+  tmp_ref={ .set_node={ .prev=tmp_ref!0@1#1..set_node..prev, .next=tmp_ref!0@1#1..set_node..next }, .ready_node={ .prev=tmp_ref!0@1#1..ready_node..prev, .next=tmp_ref!0@1#1..ready_node..next },
+    .uctx_node={ .prev=tmp_ref!0@1#1..uctx_node..prev, .next=tmp_ref!0@1#1..uctx_node..next },
+    .waiter={ .node={ .prev=tmp_ref!0@1#1..waiter..node..prev, .next=tmp_ref!0@1#1..waiter..node..next }, .notify_proc=tmp_ref!0@1#1..waiter..notify_proc },
+    .parent=tmp_ref!0@1#1..parent,
+    .handle=((struct handle *)NULL), .id=0u,
+    .emask=4294967295u, .cookie=NULL } ({ { ?, ? }, { ?, ? }, { ?, ? }, { { ?, ? }, ? }, ?, ?, 00000000 00000000 00000000 00000000, 11111111 11111111 11111111 11111111, ? })
+
+State 371 file uctx.c function uctx_handle_get line 497 thread 0
+----------------------------------------------------
+  ctx=&cbmc_curr_uctx (?)
+
+State 372 file uctx.c function uctx_handle_get line 497 thread 0
+----------------------------------------------------
+  handle_id=0u (00000000 00000000 00000000 00000000)
+
+State 373 file uctx.c function uctx_handle_get line 497 thread 0
+----------------------------------------------------
+  out=&tmp_ref!0@1 (?)
+
+State 374 file uctx.c function uctx_handle_get_tmp_ref line 456 thread 0
+----------------------------------------------------
+  ret=0 (00000000 00000000 00000000 00000000)
+
+State 383 file uctx.c function uctx_handle_get_tmp_ref line 462 thread 0
+----------------------------------------------------
+  ctx=&cbmc_curr_uctx (?)
+
+State 384 file uctx.c function uctx_handle_get_tmp_ref line 462 thread 0
+----------------------------------------------------
+  handle_id=0u (00000000 00000000 00000000 00000000)
+
+State 385 file uctx.c function _check_handle_id line 165 thread 0
+----------------------------------------------------
+  idx=0u (00000000 00000000 00000000 00000000)
+
+State 390 file uctx.c function _check_handle_id line 181 thread 0
+----------------------------------------------------
+  idx=0u (00000000 00000000 00000000 00000000)
+
+State 395 file uctx.c function _check_handle_id line 187 thread 0
+----------------------------------------------------
+  bitmap=cbmc_curr_uctx.inuse (?)
+
+State 396 file uctx.c function _check_handle_id line 187 thread 0
+----------------------------------------------------
+  bit=0 (00000000 00000000 00000000 00000000)
+
+State 407 file uctx.c function uctx_handle_get_tmp_ref line 462 thread 0
+----------------------------------------------------
+  ret=-2 (11111111 11111111 11111111 11111110)
+
+State 412 function uctx_handle_get thread 0
+----------------------------------------------------
+  ret=-2 (11111111 11111111 11111111 11111110)
+
+State 416 file ipc_msg.c function sys_send_msg line 562 thread 0
+----------------------------------------------------
+  ret=-2 (11111111 11111111 11111111 11111110)
+
+State 419 file ipc_msg.c function sys_send_msg line 566 thread 0
+----------------------------------------------------
+  chandle=((struct handle *)NULL) (?)
+
+State 424 file ipc_msg.c function sys_send_msg line 566 thread 0
+----------------------------------------------------
+  ret=-8 (11111111 11111111 11111111 11111000)
+
+State 429 file /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c function send_reqv line 244 thread 0
+----------------------------------------------------
+  rc=4611686018427387904l (01000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 433 function _write_req thread 0
+----------------------------------------------------
+  rc=4611686018427387904l (01000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 436 file /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c function _write_req line 548 thread 0
+----------------------------------------------------
+  msg=&msg!0@1 (?)
+
+State 437 file /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c function _write_req line 548 thread 0
+----------------------------------------------------
+  res=4611686018427387904l (01000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000)
+
+State 447 file /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c function _write_req line 548 thread 0
+----------------------------------------------------
+  rc=4611686018427387880l (00111111 11111111 11111111 11111111 11111111 11111111 11111111 11101000)
+
+State 450 file /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c function storage_write line 572 thread 0
+----------------------------------------------------
+  rc=4040l (00000000 00000000 00000000 00000000 00000000 00000000 00001111 11001000)
+
+State 453 file /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c function storage_write line 579 thread 0
+----------------------------------------------------
+  off=18446744073709547575ul (11111111 11111111 11111111 11111111 11111111 11111111 11110000 00110111)
+
+State 454 file /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c function storage_write line 580 thread 0
+----------------------------------------------------
+  ptr=(uint8_t *)(&tmp!0@1 + 4040l) (?)
+
+State 455 file /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c function storage_write line 581 thread 0
+----------------------------------------------------
+  bytes_written=4040ul (00000000 00000000 00000000 00000000 00000000 00000000 00001111 11001000)
+
+State 456 file /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c function storage_write line 582 thread 0
+----------------------------------------------------
+  size=4041ul (00000000 00000000 00000000 00000000 00000000 00000000 00001111 11001001)
+
+Violated property:
+  file /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c function storage_write line 565 thread 0
+  trace gen storage_write ..................................................................................................................................................................................................... trace gen storage_write
+  chunk != size - (unsigned long int)1
+
+

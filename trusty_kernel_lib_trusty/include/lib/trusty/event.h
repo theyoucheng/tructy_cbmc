@@ -23,15 +23,18 @@
 
 #pragma once
 
-#include <list.h>
-#include <reflist.h>
-#include <stdint.h>
-#include <sys/types.h>
-
-#include <kernel/spinlock.h>
-#include <lib/trusty/handle.h>
-#include <lib/trusty/uuid.h>
-#include <uapi/trusty_uevent.h>
+//#include <list.h>
+#include "/home/syc/workspace/google-aspire/trusty/external/lk/include/shared/lk/list.h"
+//#include <reflist.h>
+//#include <stdint.h>
+//#include <sys/types.h>
+//
+//#include <kernel/spinlock.h>
+//#include <lib/trusty/handle.h>
+#include "/home/syc/workspace/google-aspire/trusty/trusty/trusty_kernel_lib_trusty/include/lib/trusty/handle.h"
+//#include <lib/trusty/uuid.h>
+#include "/home/syc/workspace/google-aspire/trusty/trusty/trusty_kernel_lib_trusty/include/lib/trusty/uuid.h"
+//#include <uapi/trusty_uevent.h>
 
 /**
  * struct event_source_ops - user provided callbacks for event source

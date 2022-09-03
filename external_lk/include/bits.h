@@ -23,10 +23,11 @@
 #ifndef __BITS_H
 #define __BITS_H
 
-#include <compiler.h>
-#include <arch/ops.h>
+//#include <compiler.h>
+//#include <arch/ops.h>
+#include "/home/syc/workspace/google-aspire/trusty/external/lk/include/arch/ops.h"
 
-__BEGIN_CDECLS;
+//__BEGIN_CDECLS;
 
 #define clz(x) __builtin_clz(x)
 #define ctz(x) __builtin_ctz(x)
@@ -50,14 +51,16 @@ __BEGIN_CDECLS;
 
 static inline int bitmap_set(unsigned long *bitmap, int bit)
 {
-    unsigned long mask = 1UL << BITMAP_BIT_IN_INT(bit);
-    return atomic_or(&((int *)bitmap)[BITMAP_INT(bit)], (int)mask) & (int)mask ? 1 : 0;
+    //unsigned long mask = 1UL << BITMAP_BIT_IN_INT(bit);
+    //return atomic_or(&((int *)bitmap)[BITMAP_INT(bit)], (int)mask) & (int)mask ? 1 : 0;
+
+    bitmap[bit] = 1;
+    return 0;
 }
 
 static inline int bitmap_clear(unsigned long *bitmap, int bit)
 {
     unsigned long mask = 1UL << BITMAP_BIT_IN_INT(bit);
-
     return atomic_and(&((int *)bitmap)[BITMAP_INT(bit)], (int)~mask) & (int)mask ? 1:0;
 }
 
@@ -76,11 +79,21 @@ static inline int bitmap_ffz(unsigned long *bitmap, int numbits)
 {
     uint i;
     int bit;
+    int cbmc_tmp_inuse0 = bitmap[0];
+    int cbmc_tmp_inuse1 = bitmap[1];
+    int cbmc_tmp_inuse2 = bitmap[2];
+    int cbmc_tmp_inuse3 = bitmap[3];
+    int cbmc_tmp_inuse4 = bitmap[4];
 
-    for (i = 0; i < BITMAP_NUM_WORDS(numbits); i++) {
-        if (bitmap[i] == ~0UL)
+    //for (i = 0; i < BITMAP_NUM_WORDS(numbits); i++) {
+    for (i = 0; i < (numbits); i++) {
+	    int cbmc_tmp_bit_bitmap_i = bitmap[i];
+	//unsigned long tmp = bitmap[i];
+        //if (bitmap[i] == ~0UL)
+        if (bitmap[i] != 0)
             continue;
-        bit = i * BITMAP_BITS_PER_WORD + _ffz(bitmap[i]);
+        //bit = i * BITMAP_BITS_PER_WORD + _ffz(bitmap[i]);
+        bit = i;
         if (bit < numbits)
             return bit;
         return -1;
@@ -88,6 +101,6 @@ static inline int bitmap_ffz(unsigned long *bitmap, int numbits)
     return -1;
 }
 
-__END_CDECLS;
+//__END_CDECLS;
 
 #endif

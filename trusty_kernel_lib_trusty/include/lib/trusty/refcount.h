@@ -31,24 +31,27 @@ struct refcount {
     volatile int cnt;
 };
 
-//typedef void (*refcount_destroy_func)(struct refcount* ref);
-//
+typedef void (*refcount_destroy_func)(struct refcount* ref);
+
 //static inline __ALWAYS_INLINE void refcount_init(struct refcount* ref) {
-//    /* TODO: silly, but don't have atomic_set, or a clean
-//     * write barrier */
-//    atomic_and(&ref->cnt, 0);
-//    atomic_add(&ref->cnt, 1);
-//}
-//
+static inline void refcount_init(struct refcount* ref) {
+    /* TODO: silly, but don't have atomic_set, or a clean
+     * write barrier */
+    atomic_and(&ref->cnt, 0);
+    atomic_add(&ref->cnt, 1);
+}
+
 //static inline __ALWAYS_INLINE void refcount_inc(struct refcount* ref) {
-//    atomic_add(&ref->cnt, 1);
-//}
-//
+static inline  void refcount_inc(struct refcount* ref) {
+    atomic_add(&ref->cnt, 1);
+}
+
 //static inline __ALWAYS_INLINE void refcount_dec(struct refcount* ref,
-//                                                refcount_destroy_func destroy) {
-//    /* decerementing from 1? destroy */
-//    if (atomic_add(&ref->cnt, -1) == 1)
-//        destroy(ref);
-//}
+static inline void refcount_dec(struct refcount* ref,
+                                                refcount_destroy_func destroy) {
+    /* decerementing from 1? destroy */
+    if (atomic_add(&ref->cnt, -1) == 1)
+        destroy(ref);
+}
 
 #endif

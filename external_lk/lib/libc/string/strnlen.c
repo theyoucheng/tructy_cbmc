@@ -25,7 +25,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 #include <string.h>
-#include <sys/types.h>
+//#include <sys/types.h>
 
 size_t
 strnlen(char const *s, size_t count)

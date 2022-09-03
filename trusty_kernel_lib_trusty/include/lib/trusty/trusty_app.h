@@ -248,16 +248,30 @@ static inline void trusty_als_set(struct trusty_app* app,
 //    return (struct trusty_thread*)thread_tls_get(t, TLS_ENTRY_TRUSTY);
 //}
 //
-//static inline struct trusty_thread* current_trusty_thread(void) {
-//    return (struct trusty_thread*)tls_get(TLS_ENTRY_TRUSTY);
-//}
+static struct trusty_thread cbmc_trusty_thread; 
+static struct trusty_app cbmc_trusty_app; 
+bool cbmc_trusty_thread_flag = false;
 //
-//static inline struct trusty_app* current_trusty_app(void) {
-//    struct trusty_thread* trusty_thread = current_trusty_thread();
-//    if (!trusty_thread) {
-//        return NULL;
-//    }
-//    return trusty_thread->app;
-//}
+static inline struct trusty_thread* current_trusty_thread(void) {
+    //return (struct trusty_thread*)tls_get(TLS_ENTRY_TRUSTY);
+    
+    if (!cbmc_trusty_thread_flag)  {
+	    __CPROVER_havoc_object(&cbmc_trusty_thread);
+	    __CPROVER_havoc_object(&cbmc_trusty_app);
+	    cbmc_trusty_thread.app = &cbmc_trusty_app;
+	    cbmc_trusty_app.thread = &cbmc_trusty_thread;
+	    cbmc_trusty_thread_flag = true;
+    }
+    
+    return &cbmc_trusty_thread;
+}
+
+static inline struct trusty_app* current_trusty_app(void) {
+    struct trusty_thread* trusty_thread = current_trusty_thread();
+    if (!trusty_thread) {
+        return NULL;
+    }
+    return trusty_thread->app;
+}
 
 #endif

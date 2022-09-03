@@ -21,26 +21,31 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#include <assert.h>
-#include <bits.h>
-#include <debug.h>
-#include <err.h>
-#include <list.h>
+//#include <assert.h>
+//#include <bits.h>
+//#include <debug.h>
+//#include <err.h>
+#include "/home/syc/workspace/google-aspire/trusty/external/lk/include/uapi/uapi/err.h"
+//#include <list.h>
+#include "/home/syc/workspace/google-aspire/trusty/external/lk/include/shared/lk/list.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/types.h>
-#include <trace.h>
-
-#include <kernel/event.h>
-#include <kernel/mutex.h>
-#include <kernel/wait.h>
-
-#include <lib/syscall.h>
-#include <lib/trusty/handle.h>
-#include <lib/trusty/handle_set.h>
-#include <lib/trusty/uctx.h>
+//#include <sys/types.h>
+//#include <trace.h>
+//
+//#include <kernel/event.h>
+//#include <kernel/mutex.h>
+//#include <kernel/wait.h>
+//
+//#include <lib/syscall.h>
+//#include <lib/trusty/handle.h>
+//#include <lib/trusty/handle_set.h>
+//#include <lib/trusty/uctx.h>
+#include "include/lib/trusty/handle.h"
+#include "include/lib/trusty/handle_set.h"
+#include "/home/syc/workspace/google-aspire/trusty/trusty/kernel/lib/trusty/include/lib/trusty/uctx.h"
 
 #define LOCAL_TRACE 0
 
@@ -51,7 +56,7 @@
 #endif
 
 struct handle_set {
-    struct mutex mlock;
+    //struct mutex mlock;
     struct handle handle;
     struct list_node ref_list;
     struct list_node ready_list;
@@ -65,7 +70,7 @@ static struct handle_ops hset_ops = {
         .destroy = hset_destroy,
 };
 
-static struct mutex g_hset_lock = MUTEX_INITIAL_VALUE(g_hset_lock);
+//static struct mutex g_hset_lock = MUTEX_INITIAL_VALUE(g_hset_lock);
 
 static inline bool is_handle_set(struct handle* h) {
     return h->ops == &hset_ops;
@@ -111,7 +116,7 @@ static void hset_destroy(struct handle* h) {
 }
 
 static void hset_init(struct handle_set* hset) {
-    mutex_init(&hset->mlock);
+    //mutex_init(&hset->mlock);
     list_initialize(&hset->ref_list);
     list_initialize(&hset->ready_list);
     handle_init_etc(&hset->handle, &hset_ops, HANDLE_FLAG_NO_SEND);
@@ -134,14 +139,14 @@ struct handle* handle_set_create(void) {
 static void hset_waiter_notify(struct handle_waiter* w) {
     struct handle_ref* ref = containerof(w, struct handle_ref, waiter);
 
-    spin_lock(&ref->parent->slock);
+    //spin_lock(&ref->parent->slock);
     if (!list_in_list(&ref->ready_node)) {
         struct handle_set* hset =
                 containerof(ref->parent, struct handle_set, handle);
         list_add_tail(&hset->ready_list, &ref->ready_node);
     }
     handle_notify_waiters_locked(ref->parent);
-    spin_unlock(&ref->parent->slock);
+    //spin_unlock(&ref->parent->slock);
 }
 
 static int hset_attach_ref(struct handle_set* hset, struct handle_ref* ref) {
@@ -152,13 +157,13 @@ static int hset_attach_ref(struct handle_set* hset, struct handle_ref* ref) {
 
     LTRACEF("%p: %p\n", &hset->handle, ref->handle);
 
-    mutex_acquire(&hset->mlock);
+    //mutex_acquire(&hset->mlock);
     handle_incref(&hset->handle);
     ref->parent = &hset->handle;
     ref->waiter.notify_proc = hset_waiter_notify;
     list_add_tail(&hset->ref_list, &ref->set_node);
     handle_add_waiter(ref->handle, &ref->waiter);
-    mutex_release(&hset->mlock);
+    //mutex_release(&hset->mlock);
 
     if (ref->handle->ops->poll(ref->handle, ~0U, false)) {
         /*
@@ -180,7 +185,7 @@ static bool hset_find_target(struct handle_set* hset,
     if (hset == target)
         return true;
 
-    mutex_acquire(&hset->mlock);
+    //mutex_acquire(&hset->mlock);
     list_for_every_entry(&hset->ref_list, ref, struct handle_ref, set_node) {
         if (!ref->handle)
             continue;
@@ -192,11 +197,11 @@ static bool hset_find_target(struct handle_set* hset,
         if (hset_find_target(child_hset, target))
             goto found;
     }
-    mutex_release(&hset->mlock);
+    //mutex_release(&hset->mlock);
     return false;
 
 found:
-    mutex_release(&hset->mlock);
+    //mutex_release(&hset->mlock);
     return true;
 }
 
@@ -222,9 +227,9 @@ int handle_set_attach(struct handle* h, struct handle_ref* ref) {
 
     hset = containerof(h, struct handle_set, handle);
     if (is_handle_set(ref->handle)) {
-        mutex_acquire(&g_hset_lock);
+        //mutex_acquire(&g_hset_lock);
         ret = hset_attach_hset(hset, ref);
-        mutex_release(&g_hset_lock);
+        //mutex_release(&g_hset_lock);
     } else {
         ret = hset_attach_ref(hset, ref);
     }
@@ -239,9 +244,9 @@ void handle_set_detach_ref(struct handle_ref* ref) {
         struct handle_set* hset =
                 containerof(ref->parent, struct handle_set, handle);
         handle_incref(&hset->handle);
-        mutex_acquire(&hset->mlock);
+        //mutex_acquire(&hset->mlock);
         hset_detach_ref_locked(hset, ref);
-        mutex_release(&hset->mlock);
+        //mutex_release(&hset->mlock);
         handle_decref(&hset->handle);
     }
 }
@@ -254,10 +259,10 @@ void handle_set_update_ref(struct handle_ref* ref,
     if (ref->parent) {
         struct handle_set* hset =
                 containerof(ref->parent, struct handle_set, handle);
-        mutex_acquire(&hset->mlock);
+        //mutex_acquire(&hset->mlock);
         ref->emask = emask;
         ref->cookie = cookie;
-        mutex_release(&hset->mlock);
+        //mutex_release(&hset->mlock);
         handle_notify(ref->handle);
     }
 }
@@ -268,7 +273,7 @@ static int _hset_do_poll(struct handle_set* hset, struct handle_ref* out) {
     struct handle_ref* ref;
     spin_lock_saved_state_t state;
 
-    mutex_acquire(&hset->mlock);
+    //mutex_acquire(&hset->mlock);
 
     if (list_is_empty(&hset->ref_list)) {
         ret = ERR_NOT_FOUND;
@@ -303,7 +308,7 @@ static int _hset_do_poll(struct handle_set* hset, struct handle_ref* out) {
     }
 
 err_empty:
-    mutex_release(&hset->mlock);
+    //mutex_release(&hset->mlock);
 
     return ret;
 }

@@ -43,8 +43,8 @@ typedef uint32_t user_size_t;
 //#define PRIuSIZE_USER "zu"
 //#endif
 //
-//status_t arch_copy_from_user(void *kdest, user_addr_t usrc, size_t len);
-//status_t arch_copy_to_user(user_addr_t udest, const void *ksrc, size_t len);
-//ssize_t arch_strlcpy_from_user(char *kdst, user_addr_t usrc, size_t len);
-//
+status_t arch_copy_from_user(void *kdest, user_addr_t usrc, size_t len);
+status_t arch_copy_to_user(user_addr_t udest, const void *ksrc, size_t len);
+ssize_t arch_strlcpy_from_user(char *kdst, user_addr_t usrc, size_t len);
+
 //#endif /* __ARCH_USERCOPY_H */

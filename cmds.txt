@@ -1,0 +1,30 @@
+
+ ~/workspaceworkspace/cbmc/src/cbmc/cbmc ipc.c --function sys_port_create --unwind 2
+
+~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c --function main --unwind 2
+
+~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c --function main --unwind 2
+
+ ~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c --function send_reqv --unwind 2
+
+~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c ipc_msg.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c --function send_reqv --unwind 2
+	file ipc_msg.c line 533 function sys_send_msg: function 'current_uctx' is not declared
+
+~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c ipc_msg.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c uctx.c --function send_reqv --unwind 2
+
+~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c ipc_msg.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c uctx.c iovec.c --function send_reqv --unwind 2
+
+ ~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c ipc_msg.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c uctx.c iovec.c handle.c  --function send_reqv --depth 200 --object-bits 20
+
+~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c ipc_msg.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c uctx.c iovec.c handle.c  event.c /home/syc/workspace/google-aspire/trusty/external/lk/lib/libc/string/strnlen.c --function write_file --unwind 2
+
+ ~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c ipc_msg.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c uctx.c iovec.c handle.c  event.c /home/syc/workspace/google-aspire/trusty/external/lk/lib/libc/string/strnlen.c handle_set.c --function write_file --unwind 2
+
+
+## trace gen
+
+~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c ipc_msg.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c uctx.c iovec.c handle.c  event.c /home/syc/workspace/google-aspire/trusty/external/lk/lib/libc/string/strnlen.c handle_set.c --function sys_port_create --unwind 2
+
+~/workspaceworkspace/cbmc/src/cbmc/cbmc storage-test.c ipc.c ipc_msg.c /home/syc/workspace/google-aspire/trusty/trusty/user/base/lib/storage/storage.c uctx.c iovec.c handle.c  event.c /home/syc/workspace/google-aspire/trusty/external/lk/lib/libc/string/strnlen.c handle_set.c --function storage_write --unwind 10 --object-bits 10 --trace > traces-storage-write.txt
+
+

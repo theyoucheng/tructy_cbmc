@@ -41,18 +41,18 @@ typedef uint32_t handle_id_t;
 //int uctx_create(void* priv, struct uctx** ctx);
 //void uctx_destroy(struct uctx* ctx);
 //void* uctx_get_priv(struct uctx* ctx);
-//struct uctx* current_uctx(void);
-//
-//int uctx_handle_install(struct uctx* ctx,
-//                        struct handle* handle,
-//                        handle_id_t* id);
-//int uctx_handle_remove(struct uctx* ctx,
-//                       handle_id_t handle_id,
-//                       struct handle** handle_ptr);
-//int uctx_handle_get(struct uctx* ctx,
-//                    handle_id_t handle_id,
-//                    struct handle** handle_ptr);
-//
-//const struct sys_fd_ops* uctx_get_fd_ops(uint32_t fd);
+struct uctx* current_uctx(void);
+
+int uctx_handle_install(struct uctx* ctx,
+                        struct handle* handle,
+                        handle_id_t* id);
+int uctx_handle_remove(struct uctx* ctx,
+                       handle_id_t handle_id,
+                       struct handle** handle_ptr);
+int uctx_handle_get(struct uctx* ctx,
+                    handle_id_t handle_id,
+                    struct handle** handle_ptr);
+
+const struct sys_fd_ops* uctx_get_fd_ops(uint32_t fd);
 
 #endif

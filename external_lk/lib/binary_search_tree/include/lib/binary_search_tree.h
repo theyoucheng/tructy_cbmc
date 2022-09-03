@@ -24,12 +24,12 @@
 #pragma once
 
 #include <assert.h>
-#include <lk/compiler.h>
-#include <lk/macros.h>
+//#include <lk/compiler.h>
+//#include <lk/macros.h>
 #include <stdbool.h>
 #include <stddef.h>
 
-__BEGIN_CDECLS
+//__BEGIN_CDECLS
 
 /*
  * lk defines DEBUG_ASSERT for debug build asserts. Enable those checks for
@@ -276,4 +276,4 @@ void bst_delete_all_helper(struct bst_root *root, struct bst_node *node);
             _bst_for_every_cursor = bst_next(root, _bst_for_every_cursor); \
             bst_delete_all_helper(root, &(entry)->member); true;});)
 
-__END_CDECLS
+//__END_CDECLS

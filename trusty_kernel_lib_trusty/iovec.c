@@ -23,6 +23,7 @@
 
 //#include <err.h>
 //#include <lib/trusty/uio.h>
+#include "include/lib/trusty/uio.h"
 #include <string.h>
 
 #include </home/syc/workspace/google-aspire/trusty/external/lk/include/uapi/uapi/err.h>
@@ -173,6 +174,7 @@ ssize_t user_iovec_to_membuf_iter(uint8_t* buf,
 
         /* figure out how much to copy */
         size_t to_copy = uiov.iov_len - iter->data_offset;
+__CPROVER_assert(to_copy!=buf_len-1, "trace gen user_iovec_to_membuf_iter ..................................................................................................................................................................................................... trace gen user_iovec_to_membuf_iter");
         if (to_copy > buf_len)
             to_copy = buf_len;
 
@@ -183,6 +185,7 @@ ssize_t user_iovec_to_membuf_iter(uint8_t* buf,
 
         /* update the input state */
         iter->data_offset += to_copy;
+__CPROVER_assert(iter->data_offset!=uiov.iov_len-1, "trace gen user_iovec_to_membuf_iter ..................................................................................................................................................................................................... trace gen user_iovec_to_membuf_iter 2");
         if (iter->data_offset >= uiov.iov_len) {
             iter->iov_index += 1;
             iter->data_offset = 0;

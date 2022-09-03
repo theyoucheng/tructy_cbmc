@@ -37,7 +37,7 @@
 #include "/home/syc/workspace/google-aspire/trusty/external/lk/include/arch/usercopy.h"
 //
 //#include <lib/trusty/refcount.h>
-#include "refcount.h"
+#include "/home/syc/workspace/google-aspire/trusty/trusty/trusty_kernel_lib_trusty/include/lib/trusty/refcount.h"
 #include "/home/syc/workspace/google-aspire/trusty/trusty/user/base/include/user/trusty_ipc.h"
 #include "/home/syc/workspace/google-aspire/trusty/external/lk/arch/arm64/include/arch/spinlock.h"
 
@@ -75,30 +75,30 @@ struct handle {
     void* cookie;
 };
 
-//struct handle_waiter {
-//    struct list_node node;
-//    void (*notify_proc)(struct handle_waiter*);
-//};
-//
-//struct handle_event_waiter {
-//    struct handle_waiter waiter;
-//    struct event event;
-//};
-//
-//static void handle_event_waiter_notify(struct handle_waiter* hw) {
-//    struct handle_event_waiter* hew;
-//    hew = containerof(hw, struct handle_event_waiter, waiter);
-//    event_signal(&hew->event, false);
-//}
-//
-//#define HANDLE_EVENT_WAITER_INITIAL_VALUE(ew)                  \
-//    {                                                          \
-//        .waiter = {.node = LIST_INITIAL_CLEARED_VALUE,         \
-//                   .notify_proc = handle_event_waiter_notify}, \
-//        .event = EVENT_INITIAL_VALUE((ew).event, false,        \
-//                                     EVENT_FLAG_AUTOUNSIGNAL), \
-//    }
-//
+struct handle_waiter {
+    struct list_node node;
+    void (*notify_proc)(struct handle_waiter*);
+};
+
+struct handle_event_waiter {
+    struct handle_waiter waiter;
+    struct event event;
+};
+
+static void handle_event_waiter_notify(struct handle_waiter* hw) {
+    struct handle_event_waiter* hew;
+    hew = containerof(hw, struct handle_event_waiter, waiter);
+    event_signal(&hew->event, false);
+}
+
+#define HANDLE_EVENT_WAITER_INITIAL_VALUE(ew)                  \
+    {                                                          \
+        .waiter = {.node = LIST_INITIAL_CLEARED_VALUE,         \
+                   .notify_proc = handle_event_waiter_notify}, \
+        .event = EVENT_INITIAL_VALUE((ew).event, false,        \
+                                     EVENT_FLAG_AUTOUNSIGNAL), \
+    }
+
 ///**
 // * struct handle_ref - struct representing handle reference
 // * @set_node:   list node used with set_list of handle_set struct
@@ -111,17 +111,17 @@ struct handle {
 // * @emask:      event mask
 // * @cookie:     corresponds to cookie field in uevent struct
 // */
-//struct handle_ref {
-//    struct list_node set_node;
-//    struct list_node ready_node;
-//    struct list_node uctx_node;
-//    struct handle_waiter waiter;
-//    struct handle* parent;
-//    struct handle* handle;
-//    uint32_t id;
-//    uint32_t emask;
-//    void* cookie;
-//};
+struct handle_ref {
+    struct list_node set_node;
+    struct list_node ready_node;
+    struct list_node uctx_node;
+    struct handle_waiter waiter;
+    struct handle* parent;
+    struct handle* handle;
+    uint32_t id;
+    uint32_t emask;
+    void* cookie;
+};
 
 struct handle_ops {
     uint32_t (*poll)(struct handle* handle, uint32_t emask, bool finalize);
@@ -140,19 +140,23 @@ struct handle_ops {
                      user_addr_t* addr);
 };
 
-//struct handle_list {
-//    struct list_node handles;
-//    mutex_t lock;
-//    event_t* wait_event;
-//};
-//
+struct handle_list {
+    struct list_node handles;
+    //mutex_t lock;
+    event_t* wait_event;
+};
+
 //#define HANDLE_LIST_INITIAL_VALUE(hs)                \
 //    {                                                \
 //        .handles = LIST_INITIAL_VALUE((hs).handles), \
 //        .lock = MUTEX_INITIAL_VALUE((hs).lock),      \
 //    }
-//
-///* handle management */
+#define HANDLE_LIST_INITIAL_VALUE(hs)                \
+    {                                                \
+        .handles = LIST_INITIAL_VALUE((hs).handles), \
+    }
+
+/* handle management */
 void handle_init_etc(struct handle* handle,
                      struct handle_ops* ops,
                      uint32_t flags);
@@ -160,48 +164,48 @@ void handle_init_etc(struct handle* handle,
 static inline void handle_init(struct handle* handle, struct handle_ops* ops) {
     handle_init_etc(handle, ops, 0);
 }
-//void handle_close(struct handle* handle);
-//
-//void handle_incref(struct handle* handle);
-//void handle_decref(struct handle* handle);
-//
-//void handle_add_waiter(struct handle* h, struct handle_waiter* w);
-//void handle_del_waiter(struct handle* h, struct handle_waiter* w);
-//
-//int handle_wait(struct handle* handle,
-//                uint32_t* handle_event,
-//                lk_time_t timeout);
-//int handle_ref_wait(const struct handle_ref* in,
-//                    struct handle_ref* out,
-//                    lk_time_t timeout);
-//void handle_notify(struct handle* handle);
-//void handle_notify_waiters_locked(struct handle* handle);
-//
-//static inline void handle_set_cookie(struct handle* handle, void* cookie) {
-//    handle->cookie = cookie;
-//}
-//
-//static inline void* handle_get_cookie(struct handle* handle) {
-//    return handle->cookie;
-//}
-//
-//void handle_list_init(struct handle_list* hlist);
-//void handle_list_add(struct handle_list* hlist, struct handle* handle);
-//void handle_list_del(struct handle_list* hlist, struct handle* handle);
-//void handle_list_delete_all(struct handle_list* hlist);
-//int handle_list_wait(struct handle_list* hlist,
-//                     struct handle** handle_ptr,
-//                     uint32_t* event_ptr,
-//                     lk_time_t timeout);
-//
-//static inline bool handle_is_sendable(struct handle* h) {
-//    return !(h->flags & HANDLE_FLAG_NO_SEND);
-//}
-//
-//status_t handle_mmap(struct handle* handle,
-//                     size_t offset,
-//                     user_size_t size,
-//                     uint32_t mmap_prot,
-//                     user_addr_t* addr);
-//
+void handle_close(struct handle* handle);
+
+void handle_incref(struct handle* handle);
+void handle_decref(struct handle* handle);
+
+void handle_add_waiter(struct handle* h, struct handle_waiter* w);
+void handle_del_waiter(struct handle* h, struct handle_waiter* w);
+
+int handle_wait(struct handle* handle,
+                uint32_t* handle_event,
+                lk_time_t timeout);
+int handle_ref_wait(const struct handle_ref* in,
+                    struct handle_ref* out,
+                    lk_time_t timeout);
+void handle_notify(struct handle* handle);
+void handle_notify_waiters_locked(struct handle* handle);
+
+static inline void handle_set_cookie(struct handle* handle, void* cookie) {
+    handle->cookie = cookie;
+}
+
+static inline void* handle_get_cookie(struct handle* handle) {
+    return handle->cookie;
+}
+
+void handle_list_init(struct handle_list* hlist);
+void handle_list_add(struct handle_list* hlist, struct handle* handle);
+void handle_list_del(struct handle_list* hlist, struct handle* handle);
+void handle_list_delete_all(struct handle_list* hlist);
+int handle_list_wait(struct handle_list* hlist,
+                     struct handle** handle_ptr,
+                     uint32_t* event_ptr,
+                     lk_time_t timeout);
+
+static inline bool handle_is_sendable(struct handle* h) {
+    return !(h->flags & HANDLE_FLAG_NO_SEND);
+}
+
+status_t handle_mmap(struct handle* handle,
+                     size_t offset,
+                     user_size_t size,
+                     uint32_t mmap_prot,
+                     user_addr_t* addr);
+
 #endif

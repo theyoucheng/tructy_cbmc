@@ -87,44 +87,44 @@ enum {
 #define IPC_CHAN_MAX_BUFS 32
 #define IPC_CHAN_MAX_BUF_SIZE 4096
 
-//struct ipc_chan {
-//    struct obj refobj;
-//    //spin_lock_t ref_slock;
-//    struct obj_ref peer_ref;
-//    struct ipc_chan* peer;
-//    const struct uuid* uuid;
-//
-//    uint32_t state;
-//    uint32_t flags;
-//    uint32_t aux_state;
-//
-//    /* handle_ref is a self reference when there are
-//     * outstanding handles out there. It is removed
-//     * when last handle ref goes away.
-//     */
-//    struct obj_ref handle_ref;
-//    struct handle handle;
-//
-//    /* used for port's pending list. node_ref field is a
-//     * self reference when node field is inserted in the list.
-//     *
-//     * TODO: consider creating generic solution by grouping
-//     * together list_node and struct obj_ref into single struct.
-//     */
-//    struct obj_ref node_ref;
-//    struct list_node node;
-//
-//    struct ipc_msg_queue* msg_queue;
-//
-//    /*
-//     * TODO: consider changing async connect to preallocate
-//     *       not-yet-existing port object then we can get rid
-//     *      of this field.
-//     */
-//    const char* path;
-//
-//    struct mutex mlock;
-//};
+struct ipc_chan {
+    //struct obj refobj;
+    ////spin_lock_t ref_slock;
+    //struct obj_ref peer_ref;
+    struct ipc_chan* peer;
+    const struct uuid* uuid;
+
+    uint32_t state;
+    uint32_t flags;
+    uint32_t aux_state;
+
+    ///* handle_ref is a self reference when there are
+    // * outstanding handles out there. It is removed
+    // * when last handle ref goes away.
+    // */
+    //struct obj_ref handle_ref;
+    struct handle handle;
+
+    ///* used for port's pending list. node_ref field is a
+    // * self reference when node field is inserted in the list.
+    // *
+    // * TODO: consider creating generic solution by grouping
+    // * together list_node and struct obj_ref into single struct.
+    // */
+    //struct obj_ref node_ref;
+    struct list_node node;
+
+    struct ipc_msg_queue* msg_queue;
+
+    ///*
+    // * TODO: consider changing async connect to preallocate
+    // *       not-yet-existing port object then we can get rid
+    // *      of this field.
+    // */
+    const char* path;
+
+    //struct mutex mlock;
+};
 
 /* called by server to create port */
 int ipc_port_create(const uuid_t* sid,
@@ -166,15 +166,15 @@ int ipc_port_create(const uuid_t* sid,
 #define IPC_CONNECT_ASYNC 0x2U
 #define IPC_CONNECT_MASK (IPC_CONNECT_WAIT_FOR_PORT | IPC_CONNECT_ASYNC)
 
-//int ipc_port_connect_async(const uuid_t* cid,
-//                           const char* path,
-//                           size_t max_path,
-//                           uint flags,
-//                           struct handle** chandle_ptr);
-//
-//bool ipc_is_channel(struct handle* handle);
-//bool ipc_is_port(struct handle* handle);
-//
+int ipc_port_connect_async(const uuid_t* cid,
+                           const char* path,
+                           size_t max_path,
+                           uint flags,
+                           struct handle** chandle_ptr);
+
+bool ipc_is_channel(struct handle* handle);
+bool ipc_is_port(struct handle* handle);
+
 ///**
 // *  is_ns_client() - checks if specified uuid represents a non-secure client
 // *  @uuid: pointer to struct uuid representin IPC client

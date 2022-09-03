@@ -24,22 +24,23 @@
 #ifndef __LIB_TRUSTY_IPC_MSG_H
 #define __LIB_TRUSTY_IPC_MSG_H
 
-#include <kernel/usercopy.h>
+//#include <kernel/usercopy.h>
+#include "/home/syc/workspace/google-aspire/trusty/external/lk/include/arch/usercopy.h"
 #include <stdbool.h>
 #include <stdint.h>
 #include <sys/types.h>
 
-#include <lib/trusty/uctx.h>
-#include <lib/trusty/uio.h>
-
-struct ipc_msg_queue;
-int ipc_msg_queue_create(uint num_items,
-                         size_t item_sz,
-                         struct ipc_msg_queue** mq);
-void ipc_msg_queue_destroy(struct ipc_msg_queue* mq);
-
-bool ipc_msg_queue_is_empty(struct ipc_msg_queue* mq);
-bool ipc_msg_queue_is_full(struct ipc_msg_queue* mq);
+//#include <lib/trusty/uctx.h>
+//#include <lib/trusty/uio.h>
+//
+//struct ipc_msg_queue;
+//int ipc_msg_queue_create(uint num_items,
+//                         size_t item_sz,
+//                         struct ipc_msg_queue** mq);
+//void ipc_msg_queue_destroy(struct ipc_msg_queue* mq);
+//
+//bool ipc_msg_queue_is_empty(struct ipc_msg_queue* mq);
+//bool ipc_msg_queue_is_full(struct ipc_msg_queue* mq);
 
 /********** these structure definitions shared with userspace **********/
 
@@ -64,11 +65,11 @@ struct ipc_msg_user {
     user_addr_t handles; /* points to array of handle ids */
 };
 
-struct ipc_msg_info {
-    size_t len;
-    uint32_t id;
-    uint32_t num_handles;
-};
+//struct ipc_msg_info {
+//    size_t len;
+//    uint32_t id;
+//    uint32_t num_handles;
+//};
 
 struct ipc_msg_info_user {
     user_size_t len;
