@@ -1,7 +1,7 @@
 # tructy_cbmc
 
-CBMC patch for verifying trusty
+Path for verifying Trusty (via CBMC)
 
 Naming convention: a folder A_B in this repo indicates the original folder A/B in the Trusty code base 
 
-To run: Please refer to `cmds.txt' inside the fodler `trusty_kernel_lib_trusty'
+To run: Please refer to `cmds.txt` inside the fodler `trusty_kernel_lib_trusty`
