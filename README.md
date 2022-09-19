@@ -4,4 +4,7 @@ Path for verifying Trusty (via CBMC)
 
 Naming convention: a folder A_B in this repo indicates the original folder A/B in the Trusty code base 
 
-To run: Please refer to `cmds.txt` inside the fodler `trusty_kernel_lib_trusty`
+To run: Please refer to [cmds.txt](https://github.com/theyoucheng/tructy_cbmc/blob/main/cmds.txt)
+
+
+To [build and run Trusty](https://github.com/theyoucheng/tructy_cbmc/blob/main/scripts/build_run_trusty.txt) 
