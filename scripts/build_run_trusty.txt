@@ -1,0 +1,10 @@
+```
+# checkout aosp Trusty project
+mkdir trusty
+cd trusty
+repo init -u https://android.googlesource.com/trusty/manifest -b master
+repo sync -j32
+
+# build qemu fuzzing project
+./trusty/vendor/google/aosp/scripts/build.py qemu-generic-arm64-test-debug
+```
