@@ -1,4 +1,4 @@
-# tructy_cbmc
+# trusty_cbmc
 
 Patch for verifying Trusty (via CBMC)
 
